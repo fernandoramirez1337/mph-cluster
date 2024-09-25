@@ -1,0 +1,56 @@
+services:
+  host_a:
+    build: .
+    image: ubuntu-mpi-cluster-image
+    container_name: host-10.9.0.5
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      net-10.9.0.0:
+        ipv4_address: 10.9.0.5
+    ports:
+      - "2222:22"
+
+  host_b:
+    image: ubuntu-mpi-cluster-image
+    container_name: host-10.9.0.6
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      net-10.9.0.0:
+        ipv4_address: 10.9.0.6
+    ports:
+      - "2223:22"
+
+  host_c:
+    image: ubuntu-mpi-cluster-image
+    container_name: host-10.9.0.7
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      net-10.9.0.0:
+        ipv4_address: 10.9.0.7
+    ports:
+      - "2224:22"
+
+  host_d:
+    image: ubuntu-mpi-cluster-image
+    container_name: host-10.9.0.8
+    tty: true
+    cap_add:
+      - ALL
+    networks:
+      net-10.9.0.0:
+        ipv4_address: 10.9.0.8
+    ports:
+      - "2225:22"
+
+networks:
+  net-10.9.0.0:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.9.0.0/24
