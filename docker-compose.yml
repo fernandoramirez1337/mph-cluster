@@ -1,7 +1,7 @@
 services:
   host_a:
     build: ./manager_build/
-    image: ubuntu-mpi-cluster-manager-image
+    image: mpi-cluster-manager-image
     container_name: host-10.9.0.5
     tty: true
     cap_add:
@@ -11,10 +11,17 @@ services:
         ipv4_address: 10.9.0.5
     ports:
       - "2222:22"
+    extra_hosts:
+      - "manager:10.9.0.5"
+      - "worker1:10.9.0.6"
+      - "worker2:10.9.0.7"
+      - "worker3:10.9.0.8"
+    volumes:
+      - /Users/99/Code/c/mpi/cluster/cloud:/mnt/nfs_share
 
   host_b:
     build: ./worker_build/
-    image: ubuntu-mpi-cluster-worker-image
+    image: mpi-cluster-worker-1-image
     container_name: host-10.9.0.6
     tty: true
     cap_add:
@@ -24,9 +31,13 @@ services:
         ipv4_address: 10.9.0.6
     ports:
       - "2223:22"
+    extra_hosts:
+      - "manager:10.9.0.5"
+      - "worker1:10.9.0.6"
 
   host_c:
-    image: ubuntu-mpi-cluster-worker-image
+    build: ./worker_build/
+    image: mpi-cluster-worker-2-image
     container_name: host-10.9.0.7
     tty: true
     cap_add:
@@ -36,9 +47,13 @@ services:
         ipv4_address: 10.9.0.7
     ports:
       - "2224:22"
+    extra_hosts:
+      - "manager:10.9.0.5"
+      - "worker2:10.9.0.7"
 
   host_d:
-    image: ubuntu-mpi-cluster-worker-image
+    build: ./worker_build/
+    image: mpi-cluster-worker-3-image
     container_name: host-10.9.0.8
     tty: true
     cap_add:
@@ -48,9 +63,12 @@ services:
         ipv4_address: 10.9.0.8
     ports:
       - "2225:22"
+    extra_hosts:
+      - "manager:10.9.0.5"
+      - "worker3:10.9.0.8"
 
 networks:
-  net-10.9.0.0:s
+  net-10.9.0.0:
     driver: bridge
     ipam:
       config:
