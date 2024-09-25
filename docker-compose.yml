@@ -1,7 +1,7 @@
 services:
   host_a:
-    build: .
-    image: ubuntu-mpi-cluster-image
+    build: ./manager_build/
+    image: ubuntu-mpi-cluster-manager-image
     container_name: host-10.9.0.5
     tty: true
     cap_add:
@@ -13,7 +13,8 @@ services:
       - "2222:22"
 
   host_b:
-    image: ubuntu-mpi-cluster-image
+    build: ./worker_build/
+    image: ubuntu-mpi-cluster-worker-image
     container_name: host-10.9.0.6
     tty: true
     cap_add:
@@ -25,7 +26,7 @@ services:
       - "2223:22"
 
   host_c:
-    image: ubuntu-mpi-cluster-image
+    image: ubuntu-mpi-cluster-worker-image
     container_name: host-10.9.0.7
     tty: true
     cap_add:
@@ -37,7 +38,7 @@ services:
       - "2224:22"
 
   host_d:
-    image: ubuntu-mpi-cluster-image
+    image: ubuntu-mpi-cluster-worker-image
     container_name: host-10.9.0.8
     tty: true
     cap_add:
@@ -49,7 +50,7 @@ services:
       - "2225:22"
 
 networks:
-  net-10.9.0.0:
+  net-10.9.0.0:s
     driver: bridge
     ipam:
       config:

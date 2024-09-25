@@ -1,1 +1,1 @@
-# mph-cluster
+# mpi-cluster
